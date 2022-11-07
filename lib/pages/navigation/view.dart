@@ -13,11 +13,11 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   final logic = Get.put(NavigationLogic());
 
-
   final state = Get.find<NavigationLogic>().state;
 
   var members = 2000000;
   var shops = 20000;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -41,133 +41,108 @@ class _NavigationPageState extends State<NavigationPage> {
       luminosityAlpha: 0.4,
       child: Obx(() {
         return NavigationView(
-          pane: NavigationPane(
-            selected: logic.selectedidex.value,
-            onChanged: (value) {
-
-              // Navigator.pop(context);
-           logic.changeindex=value;
-
-            },size: NavigationPaneSize(openWidth: 200),
-            items: [
-              PaneItemSeparator(color: Colors.transparent),
-
-
-              PaneItem(
-                selectedTileColor: ButtonState.all(colors.primary_color),
-
-                icon: Image.asset(
-                  assets.home,
-                  color: colors.primarywhite_color,
-                  height: 20,
-                ),
-                title: Text(
-                  strings.dashboard,
-                  style: FluentTheme.of(context).typography.display,
-                ),
-              ),
-              PaneItemSeparator(color: Colors.transparent),
-
-
-              PaneItem(
+            pane: NavigationPane(
+              selected: logic.selectedidex.value,
+              onChanged: (value) {
+                // Navigator.pop(context);
+                logic.changeindex = value;
+              },
+              size: NavigationPaneSize(openWidth: 200),
+              items: [
+                PaneItemSeparator(color: Colors.transparent),
+                PaneItem(
                   selectedTileColor: ButtonState.all(colors.primary_color),
                   icon: Image.asset(
-                    assets.member,
+                    assets.home,
                     color: colors.primarywhite_color,
                     height: 20,
                   ),
                   title: Text(
-                    strings.member,
+                    strings.dashboard,
                     style: FluentTheme.of(context).typography.display,
                   ),
-                  infoBadge: InfoBadge(
-                    source: Text(" ${NumberFormat.compactCurrency(
-                      decimalDigits: 2,
-                      symbol:
-                      '', // if you want to add currency symbol then pass that in this else leave it empty.
-                    ).format(members)}"),
-                  )),
-              PaneItemSeparator(color: Colors.transparent),
-
-              PaneItem(  selectedTileColor: ButtonState.all(colors.primary_color),
-
-                icon: Image.asset(
-                  assets.shop,
-                  color: colors.primarywhite_color,
-                  height: 20,
                 ),
-                title: Text(
-                  strings.shop,
-                  style: FluentTheme.of(context).typography.display,
-                ),infoBadge:  InfoBadge(
-                source: Text(" ${NumberFormat.compactCurrency(
-                decimalDigits: 2,
-                symbol:
-                '', // if you want to add currency symbol then pass that in this else leave it empty.
-              ).format(shops)}"),
-        )
-              ),
-
-              PaneItemSeparator(color: Colors.transparent),
-
-
-              PaneItem(
-                selectedTileColor: ButtonState.all(colors.primary_color),
-
-                icon: Image.asset(
-                  assets.fee,
-                  color: colors.primarywhite_color,
-                  height: 20,
+                PaneItemSeparator(color: Colors.transparent),
+                PaneItem(
+                    selectedTileColor: ButtonState.all(colors.primary_color),
+                    icon: Image.asset(
+                      assets.member,
+                      color: colors.primarywhite_color,
+                      height: 20,
+                    ),
+                    title: Text(
+                      strings.member,
+                      style: FluentTheme.of(context).typography.display,
+                    ),
+                    infoBadge: InfoBadge(
+                      source: Text(" ${NumberFormat.compactCurrency(
+                        decimalDigits: 2,
+                        symbol:
+                            '', // if you want to add currency symbol then pass that in this else leave it empty.
+                      ).format(members)}"),
+                    )),
+                PaneItemSeparator(color: Colors.transparent),
+                PaneItem(
+                    selectedTileColor: ButtonState.all(colors.primary_color),
+                    icon: Image.asset(
+                      assets.shop,
+                      color: colors.primarywhite_color,
+                      height: 20,
+                    ),
+                    title: Text(
+                      strings.shop,
+                      style: FluentTheme.of(context).typography.display,
+                    ),
+                    infoBadge: InfoBadge(
+                      source: Text(" ${NumberFormat.compactCurrency(
+                        decimalDigits: 2,
+                        symbol:
+                            '', // if you want to add currency symbol then pass that in this else leave it empty.
+                      ).format(shops)}"),
+                    )),
+                PaneItemSeparator(color: Colors.transparent),
+                PaneItem(
+                  selectedTileColor: ButtonState.all(colors.primary_color),
+                  icon: Image.asset(
+                    assets.fee,
+                    color: colors.primarywhite_color,
+                    height: 20,
+                  ),
+                  title: Text(
+                    strings.fee,
+                    style: FluentTheme.of(context).typography.display,
+                  ),
                 ),
-                title: Text(
-                  strings.fee,
-                  style: FluentTheme.of(context).typography.display,
+                PaneItemSeparator(color: Colors.transparent),
+                PaneItem(
+                  selectedTileColor: ButtonState.all(colors.primary_color),
+                  icon: Image.asset(
+                    assets.task_force,
+                    color: colors.primarywhite_color,
+                    height: 20,
+                  ),
+                  title: Text(
+                    strings.tax_force,
+                    style: FluentTheme.of(context).typography.display,
+                  ),
                 ),
-              ),
-              PaneItemSeparator(color: Colors.transparent),
-
-
-              PaneItem(
-                selectedTileColor: ButtonState.all(colors.primary_color),
-
-                icon: Image.asset(
-                  assets.task_force,
-                  color: colors.primarywhite_color,
-                  height: 20,
+                PaneItemSeparator(color: Colors.transparent),
+                PaneItem(
+                  selectedTileColor: ButtonState.all(colors.primary_color),
+                  icon: Image.asset(
+                    assets.admin,
+                    color: colors.primarywhite_color,
+                    height: 20,
+                  ),
+                  title: Text(
+                    strings.admin,
+                    style: FluentTheme.of(context).typography.display,
+                  ),
                 ),
-                title: Text(
-                  strings.tax_force,
-                  style: FluentTheme.of(context).typography.display,
-                ),
-              ),
-              PaneItemSeparator(color: Colors.transparent),
-
-
-              PaneItem(
-                selectedTileColor: ButtonState.all(colors.primary_color),
-
-                icon: Image.asset(
-                  assets.admin,
-                  color: colors.primarywhite_color,
-                  height: 20,
-                ),
-                title: Text(
-                  strings.admin,
-                  style: FluentTheme.of(context).typography.display,
-                ),
-              ),
-              PaneItemSeparator(color: Colors.transparent),
-
-
-            ],
-          ),content:logic.pages[
-
-
-        logic.selectedidex.value]
-
-
-
-        );
+                PaneItemSeparator(color: Colors.transparent),
+              ],
+            ),
+            content: logic.pages[logic.selectedidex.value]);
       }),
     );
   }

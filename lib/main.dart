@@ -8,9 +8,11 @@ import 'package:ms_material_color/ms_material_color.dart';
 
 import 'package:one_market/pages/login/view.dart';
 import 'package:one_market/constants/constants_and_imports.dart';
+import 'package:one_market/pages/members/logic.dart';
 import 'package:one_market/pages/navigation/view.dart';
 
 void main() {
+
   runApp(const MyApp());
 
   doWhenWindowReady(() {
@@ -82,7 +84,7 @@ class MyApp extends StatelessWidget {
             typography: Typography.raw(
                 bodyLarge: GoogleFonts.rubik(
                   fontSize: 25,
-                  color: Colors.white,
+                  color: colors.primarydark_color,
                   // fontWeight: FontWeight.bold,
                 ),
                 display: GoogleFonts.rubik(

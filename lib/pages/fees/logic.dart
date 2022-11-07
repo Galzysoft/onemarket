@@ -7,7 +7,7 @@ class FeesLogic extends GetxController {
   final FeesState state = FeesState();
   TextEditingController feeDescription= new TextEditingController();
   TextEditingController middlename= new TextEditingController();
-  TextEditingController lastname= new TextEditingController();
+  TextEditingController controller= new TextEditingController();
   TextEditingController phonenumber= new TextEditingController();
   TextEditingController email= new TextEditingController();
   TextEditingController feeName= new TextEditingController();

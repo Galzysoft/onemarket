@@ -7,6 +7,7 @@ import '../../../widgets/default_date_picker/view.dart';
 import '../../../widgets/default_text_field/view.dart';
 import '../../../widgets/spacehieght.dart';
 import '../../../widgets/spacewidth.dart';
+import '../../../widgets/tool_bar/widget/toolBarItem.dart';
 import '../../../widgets/users_header/view.dart';
 import 'logic.dart';
 
@@ -16,19 +17,13 @@ class SearchShopsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.width);
     return NavigationView(
       content: ScaffoldPage(
-        content: mate.Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: mate.Column(
-            children: [
-              SpaceHeight(10),
-              UsersHeaderPage(backbutton: true),
-              SpaceHeight(10),
-              TextFormBox(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
-                controller: logic.controller,
+        header: UsersHeaderPage(
+            centerWidget:    SizedBox(height: 100,
+              child: TextFormBox(
+              controller: logic.controller,
                 style: FluentTheme.of(context).typography.caption!.copyWith(
                     color: FluentTheme.of(context).micaBackgroundColor),
                 placeholder: "Search for shops",
@@ -38,11 +33,24 @@ class SearchShopsPage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: FluentTheme.of(context).cardColor.withOpacity(0.7),
+                  color: FluentTheme.of(context).micaBackgroundColor.withOpacity(0.2),
                 ),
               ),
+            ),
+            toolBarItems: [
+              ToolBarItem(onPressed: () {}, label: "Print", icon: assets.print),
+              ToolBarItem(onPressed: () {}, label: "Clear", icon: assets.clear)
+            ],
+            title: "View Shop Information"),
+        content: mate.Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: mate.Column(
+            children: [
+
+
               Expanded(
-                child: ListView(padding: EdgeInsets.only(bottom: 100),
+                child: ListView(
+                  padding: EdgeInsets.only(top: 10,bottom: 100),
                   children: [
                     Column(children: [
                       SizedBox(
@@ -52,29 +60,34 @@ class SearchShopsPage extends StatelessWidget {
                             shrinkWrap: true,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
+                                    crossAxisCount: Get.width>1200?4:3,
                                     crossAxisSpacing: 50.0,
                                     mainAxisSpacing: 30.0,
                                     childAspectRatio: 1.2),
                             itemCount: 10,
-                            itemBuilder: (context, index) => SearchCard(),
+                            itemBuilder: (context, index) => SearchCard(ShopNumber: "No 40$index"),
                           )),
                       SpaceHeight(10),
-                      Row(mainAxisAlignment: MainAxisAlignment.end,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          mate.SizedBox(height: 30,
+                          mate.SizedBox(
+                            height: 30,
                             child: Button(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      ButtonState.all(colors.primarydark_color)),
+                                  backgroundColor: ButtonState.all(
+                                      colors.primarydark_color)),
                               child: mate.Row(
                                 children: [
-                                  Image.asset(assets.arrowback,width: 40,height: 30),SpaceWidth(10),
+                                  Image.asset(assets.arrowback,
+                                      width: 40, height: 30),
+                                  SpaceWidth(10),
                                   Text(
                                     "Previous",
                                     style: FluentTheme.of(context)
                                         .typography
-                                        .caption!.copyWith(fontSize: 14),
+                                        .caption!
+                                        .copyWith(fontSize: 14),
                                   ),
                                 ],
                               ),
@@ -86,21 +99,26 @@ class SearchShopsPage extends StatelessWidget {
                                 //     ));
                               },
                             ),
-                          ),SpaceWidth(30),   mate.SizedBox(height: 30,
+                          ),
+                          SpaceWidth(30),
+                          mate.SizedBox(
+                            height: 30,
                             child: Button(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                  ButtonState.all(colors.primarydark_color)),
+                                  backgroundColor: ButtonState.all(
+                                      colors.primarydark_color)),
                               child: mate.Row(
                                 children: [
                                   Text(
                                     "Next",
                                     style: FluentTheme.of(context)
                                         .typography
-                                        .caption!.copyWith(fontSize: 14),
+                                        .caption!
+                                        .copyWith(fontSize: 14),
                                   ),
-                                  Image.asset(assets.arrowfront,width: 40,height: 30),SpaceWidth(10),
-
+                                  Image.asset(assets.arrowfront,
+                                      width: 40, height: 30),
+                                  SpaceWidth(10),
                                 ],
                               ),
                               onPressed: () {

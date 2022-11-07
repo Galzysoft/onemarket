@@ -7,7 +7,7 @@ import 'state.dart';
 class CreateShopLogic extends GetxController {
   final CreateshopState state = CreateshopState();
 
-  TextEditingController shopname= new TextEditingController();
+  TextEditingController shopnumber= new TextEditingController();
   TextEditingController shopAdress= new TextEditingController();
   TextEditingController howDidYouGetTheShop= new TextEditingController();
   TextEditingController phonenumber= new TextEditingController();

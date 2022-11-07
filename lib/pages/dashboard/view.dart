@@ -22,11 +22,11 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationView(
-      content: ScaffoldPage(
+      content: ScaffoldPage(header:   UsersHeaderPage(),
         content: Container(
           padding: EdgeInsets.all(20),
           child: Column(children: [
-            UsersHeaderPage(),
+
             SpaceHeight(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

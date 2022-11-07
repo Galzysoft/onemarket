@@ -37,9 +37,13 @@ dependencies:
   flutter_acrylic: ^1.0.0+2
   flutter_animate: ^0.3.0+1
   ms_material_color:
+  file_picker: ^5.2.2
+  image_picker: ^0.8.5
   google_fonts:
   intl:
   group_button:
+
+  pluto_menu_bar: ^2.0.1
   fl_chart:
 #  for windows control
   bitsdojo_window:
