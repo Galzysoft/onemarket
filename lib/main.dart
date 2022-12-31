@@ -11,9 +11,10 @@ import 'package:one_market/constants/constants_and_imports.dart';
 import 'package:one_market/pages/members/logic.dart';
 import 'package:one_market/pages/navigation/view.dart';
 
-void main() {
+import 'pages/members/all_members/logic.dart';
 
-  runApp(const MyApp());
+void main() {
+  runApp(MyApp());
 
   doWhenWindowReady(() {
     final win = appWindow;
@@ -26,7 +27,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final logic = Get.put(All_membersLogic());
+
+  MyApp({Key? key}) : super(key: key);
 
   // AcrylicEffect effect = AcrylicEffect.acrylic;
   // This widget is the root of your application.
@@ -35,10 +38,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: mate.ThemeData(
-         primaryColor: colors.primary_color,
-        primarySwatch: MsMaterialColor(0xff35385D)
-        ,
-
+        primaryColor: colors.primary_color,
+        primarySwatch: MsMaterialColor(0xff35385D),
       ),
       home: FluentApp(
         initialRoute: PageRoutes.login,
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
             brightness: Brightness.light,
+            uncheckedColor: colors.primary_color,
             tooltipTheme: TooltipThemeData(
               decoration: BoxDecoration(color: colors.primary_color),
               textStyle: GoogleFonts.rubik(
@@ -68,13 +70,13 @@ class MyApp extends StatelessWidget {
             ),
             micaBackgroundColor: colors.primarydark_color,
             navigationPaneTheme: NavigationPaneThemeData(
-              backgroundColor: WindowEffect != WindowEffect.disabled
-                  ? Colors.transparent
-                  : null,
+              backgroundColor: colors.primarydark_color,
               iconPadding: EdgeInsets.all(8),
-              animationCurve: Curves.fastOutSlowIn,
+              animationCurve: Curves.bounceInOut,
               highlightColor: colors.primary_color,
-              animationDuration: Duration(seconds: 2),
+              animationDuration: Duration(
+                milliseconds: 1000,
+              ),
               tileColor: ButtonState.all(colors.primarydark_color),
             ),
             scaffoldBackgroundColor: colors.primary_color,
@@ -129,8 +131,8 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           visualDensity: VisualDensity.standard,
           focusTheme: FocusThemeData(
-            glowFactor: is10footScreen() ? 2.0 : 0.0,glowColor: colors.primarydark_color
-          ),
+              glowFactor: is10footScreen() ? 2.0 : 0.0,
+              glowColor: colors.primarydark_color),
           // navigationPaneTheme:
           //     NavigationPaneThemeData(backgroundColor:Colors.transparent,animationDuration: Duration(seconds: 1)),
           //

@@ -6,7 +6,7 @@ import 'package:one_market/pages/task_force/all_task_force/view.dart';
 import 'package:one_market/widgets/default_combo_box/view.dart';
 import 'package:one_market/widgets/default_date_picker/view.dart';
 import 'package:one_market/widgets/default_text_field/view.dart';
-import 'package:one_market/widgets/spacehieght.dart';
+import 'package:one_market/widgets/space.dart';
 import 'package:one_market/widgets/spacewidth.dart';
 import 'package:one_market/widgets/users_header/view.dart';
 import '../../widgets/app_skelekton/view.dart';
@@ -15,12 +15,14 @@ import 'logic.dart';
 
 class TaskForcePage extends StatelessWidget {
   final logic = Get.put(TaskForceLogic());
+  final logic2 = Get.put(AllTaskForcePage());
   final state = Get.find<TaskForceLogic>().state;
   List pages = [  CretaeTaskForcePage(),
     AllTaskForcePage(),];
   @override
   Widget build(BuildContext context) {
     return AppSkeleton(
+      onChanged: (value ) { },
       pages: pages,
       tabsBarItems: [
         PaneItemSeparator(color: Colors.transparent),
@@ -34,7 +36,7 @@ class TaskForcePage extends StatelessWidget {
           title: Text(
             "Create Task Force",
             style: FluentTheme.of(context).typography.display,
-          ),
+          ), body: pages[0],
         ),
         PaneItemSeparator(color: Colors.transparent),
         PaneItem(
@@ -55,9 +57,9 @@ class TaskForcePage extends StatelessWidget {
                 symbol:
                 '', // if you want to add currency symbol then pass that in this else leave it empty.
               ).format(2000588)}"),
-            )),
+            ), body:pages[1]),
         PaneItemSeparator(color: Colors.transparent),
-      ],
+      ], selectedidex: 0,
     );
   }
 }

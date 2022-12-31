@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' as mate;
-import 'package:one_market/widgets/spacehieght.dart';
+import 'package:one_market/widgets/space.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
 import '../../../../constants/constants_and_imports.dart';
@@ -27,12 +27,7 @@ class SearchCard extends StatelessWidget {
             title: 'Owner',
             icon: mate.Icons.person_sharp,
             onTap: () => message(context, 'Menu 1-1 tap'),
-children: [PlutoMenuItem(
-  title: 'Create Owner',
-  icon: mate.Icons.person_add,
-  onTap: () => message(context, 'Menu 1-1 tap'),
-
-),
+children: [
   PlutoMenuItem(
     title: 'Assign Owner',
     icon: mate.Icons.person_pin,

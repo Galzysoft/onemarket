@@ -60,7 +60,7 @@ class _NavigationPageState extends State<NavigationPage> {
                   title: Text(
                     strings.dashboard,
                     style: FluentTheme.of(context).typography.display,
-                  ),
+                  ), body: logic.pages[logic.selectedidex.value],
                 ),
                 PaneItemSeparator(color: Colors.transparent),
                 PaneItem(
@@ -80,7 +80,7 @@ class _NavigationPageState extends State<NavigationPage> {
                         symbol:
                             '', // if you want to add currency symbol then pass that in this else leave it empty.
                       ).format(members)}"),
-                    )),
+                    ), body: logic.pages[logic.selectedidex.value]),
                 PaneItemSeparator(color: Colors.transparent),
                 PaneItem(
                     selectedTileColor: ButtonState.all(colors.primary_color),
@@ -99,7 +99,7 @@ class _NavigationPageState extends State<NavigationPage> {
                         symbol:
                             '', // if you want to add currency symbol then pass that in this else leave it empty.
                       ).format(shops)}"),
-                    )),
+                    ), body: logic.pages[logic.selectedidex.value]),
                 PaneItemSeparator(color: Colors.transparent),
                 PaneItem(
                   selectedTileColor: ButtonState.all(colors.primary_color),
@@ -111,7 +111,7 @@ class _NavigationPageState extends State<NavigationPage> {
                   title: Text(
                     strings.fee,
                     style: FluentTheme.of(context).typography.display,
-                  ),
+                  ), body: logic.pages[logic.selectedidex.value],
                 ),
                 PaneItemSeparator(color: Colors.transparent),
                 PaneItem(
@@ -124,7 +124,7 @@ class _NavigationPageState extends State<NavigationPage> {
                   title: Text(
                     strings.tax_force,
                     style: FluentTheme.of(context).typography.display,
-                  ),
+                  ), body: logic.pages[logic.selectedidex.value],
                 ),
                 PaneItemSeparator(color: Colors.transparent),
                 PaneItem(
@@ -137,12 +137,12 @@ class _NavigationPageState extends State<NavigationPage> {
                   title: Text(
                     strings.admin,
                     style: FluentTheme.of(context).typography.display,
-                  ),
+                  ), body: logic.pages[logic.selectedidex.value],
                 ),
                 PaneItemSeparator(color: Colors.transparent),
               ],
             ),
-            content: logic.pages[logic.selectedidex.value]);
+          );
       }),
     );
   }

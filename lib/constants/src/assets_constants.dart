@@ -13,6 +13,7 @@ class assets{
   static const String totalworker = 'assets/icons/Employee (1).png';
   static const String save ='assets/icons/icons8-save-96.png';
   static const String insert ='assets/icons/insert.png';
+  static const String insertDoc ='assets/icons/icons8-document-48.png';
   static const String createshop ='assets/image/undraw_building_blocks_re_5ahy (1) 1 (1).png';
   static const String clear ='assets/icons/icons8-close-96.png';
 

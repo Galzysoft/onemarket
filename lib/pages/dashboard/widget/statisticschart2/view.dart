@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
+import 'package:one_market/widgets/space.dart';
 import 'package:one_market/widgets/spacewidth.dart';
 
 import '../../../../constants/constants_and_imports.dart';
