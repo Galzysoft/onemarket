@@ -1,6 +1,9 @@
 import 'package:one_market/utils/border_radius.dart';
+import 'package:one_market/widgets/space.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as mate;
+
+import '../constants/constants_and_imports.dart';
 
 class ShimmerHelper {
   static Widget buildBasicShimmer(
@@ -8,12 +11,47 @@ class ShimmerHelper {
       double width = double.infinity,
       double radius = 6}) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
+      baseColor: mate.Colors.grey.shade400,
+      highlightColor: mate.Colors.grey.shade100,
       child: Container(
         height: height,
         width: width,
         decoration: BoxDecorations.buildBoxDecoration_1(radius: radius),
+      ),
+    );
+  }
+
+  static Widget homepageShimmer() {
+    return ScaffoldPage(
+      header: buildBasicShimmer(),
+      content: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(children: [
+          SpaceHeight(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(child: buildBasicShimmer(height: 200)),
+              SpaceWidth(20),
+              Expanded(child: buildBasicShimmer(height: 200)),
+              SpaceWidth(20),
+              Expanded(child: buildBasicShimmer(height: 200)),
+              SpaceWidth(20),
+              Expanded(child: buildBasicShimmer(height: 200)),
+            ],
+          ),
+          SpaceHeight(12),
+          Expanded(
+            child: Row(
+              children: [
+                //    Expanded(child: Acrylic(luminosityAlpha: 0.6,tint: colors.primary_color,
+                //        child: StatisticsChartPage(chartname: "Stats"))),
+                // ,
+                Expanded(child: buildBasicShimmer(height: 400)),
+              ],
+            ),
+          )
+        ]),
       ),
     );
   }
@@ -25,7 +63,7 @@ class ShimmerHelper {
       Color color = Colors.grey}) {
     return Shimmer.fromColors(
       baseColor: color,
-      highlightColor: Colors.grey.shade100,
+      highlightColor: mate.Colors.grey.shade100,
       child: Container(
         height: height,
         width: width,
@@ -93,8 +131,8 @@ class ShimmerHelper {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
+            baseColor: mate.Colors.grey.shade300,
+            highlightColor: mate.Colors.grey.shade100,
             child: Container(
               height: 120,
               width: double.infinity,
@@ -125,8 +163,8 @@ class ShimmerHelper {
             mainAxisExtent: mainAxisExtent),
         itemBuilder: (context, index) {
           return Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
+            baseColor: mate.Colors.grey.shade300,
+            highlightColor: mate.Colors.grey.shade100,
             child: Container(
               height: 120,
               width: double.infinity,
@@ -151,8 +189,8 @@ class ShimmerHelper {
           const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
+          baseColor: mate.Colors.grey.shade300,
+          highlightColor: mate.Colors.grey.shade100,
           child: Container(
             height: itemHeight,
             width: double.infinity,

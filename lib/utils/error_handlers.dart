@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 
 class ErrorHandlers {
   ErrorHandlers(BuildContext context,
-      {required String message, dynamic messageServer, required bool isError}) {
+      {required String message, dynamic messageServer, required bool isError,bool? ismessage}) {
     showMessage(context,
         message: message,
-        messageServer: messageServer,
+        messageServer: messageServer,ismessage:ismessage ,
         isError: isError);
   }
 
   static showMessage(BuildContext context,
-      {required String message, Map<String, dynamic>? messageServer, required bool isError}) {
+      {required String message, dynamic? messageServer, required bool isError,bool? ismessage}) {
  String bigMessage="";
  print('messageServer $messageServer');
-    if (messageServer != null||messageServer != "null") {
+    if (ismessage !=true&& (messageServer != null||messageServer != "null")) {
       messageServer?.forEach((key, value) {
         bigMessage+=" ${value[0].toString()},";
 
@@ -29,10 +29,13 @@ class ErrorHandlers {
             : bigMessage,
         snackPosition: SnackPosition.TOP,duration: Duration(seconds: 5),
       ));
-    }else{ return Get.showSnackbar(GetSnackBar(
+    }
+     else{ return Get.showSnackbar(GetSnackBar(
       backgroundColor: isError == true ? Colors.red : Colors.green,
-      message:  message
-         ,
+      message:  messageServer == "null" || messageServer == null||messageServer.toString().isEmpty
+          ? message
+          : messageServer.toString(),
+
       snackPosition: SnackPosition.TOP,duration: Duration(seconds: 5),
     ));}
 

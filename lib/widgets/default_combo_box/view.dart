@@ -50,7 +50,7 @@ class _DefaultComboBoxState extends State<DefaultComboBox> {
           color: colors.primarydark_color,
           height: 45,
           child: ComboBox<String>(
-            popupColor: colors.textfieldback_color,
+            popupColor: colors.primarywhite_color,
             iconSize: 40,
             placeholder: Text(
               widget.label,

@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:one_market/constants/constants_and_imports.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as Acrylics;
+import 'package:one_market/pages/login/logic.dart';
+import 'package:one_market/pages/login/view.dart';
+import 'package:one_market/pages/members/logic.dart';
 import 'logic.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -12,8 +15,9 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   final logic = Get.put(NavigationLogic());
+  final logicLogin = Get.put(LoginLogic());
 
-  final state = Get.find<NavigationLogic>().state;
+  var logicMember = Get.put(MembersLogic());
 
   var members = 2000000;
   var shops = 20000;
@@ -41,108 +45,149 @@ class _NavigationPageState extends State<NavigationPage> {
       luminosityAlpha: 0.4,
       child: Obx(() {
         return NavigationView(
-            pane: NavigationPane(
-              selected: logic.selectedidex.value,
-              onChanged: (value) {
-                // Navigator.pop(context);
-                logic.changeindex = value;
-              },
-              size: NavigationPaneSize(openWidth: 200),
-              items: [
-                PaneItemSeparator(color: Colors.transparent),
-                PaneItem(
+          pane: NavigationPane(
+            selected: logic.selectedidex.value,
+            onChanged: (value) {
+              // Navigator.pop(context);
+              logic.changeindex = value;
+            },
+            size: NavigationPaneSize(openWidth: 200),
+            items: [
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItem(
+                selectedTileColor: ButtonState.all(colors.primary_color),
+                icon: Image.asset(
+                  assets.home,
+                  color: colors.primarywhite_color,
+                  height: 20,
+                ),
+                title: Text(
+                  strings.dashboard,
+                  style: FluentTheme
+                      .of(context)
+                      .typography
+                      .display,
+                ), body: logic.pages[logic.selectedidex.value],
+              ),
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItem(
                   selectedTileColor: ButtonState.all(colors.primary_color),
                   icon: Image.asset(
-                    assets.home,
+                    assets.member,
                     color: colors.primarywhite_color,
                     height: 20,
                   ),
                   title: Text(
-                    strings.dashboard,
-                    style: FluentTheme.of(context).typography.display,
-                  ), body: logic.pages[logic.selectedidex.value],
-                ),
-                PaneItemSeparator(color: Colors.transparent),
-                PaneItem(
-                    selectedTileColor: ButtonState.all(colors.primary_color),
-                    icon: Image.asset(
-                      assets.member,
-                      color: colors.primarywhite_color,
-                      height: 20,
-                    ),
-                    title: Text(
-                      strings.member,
-                      style: FluentTheme.of(context).typography.display,
-                    ),
-                    infoBadge: InfoBadge(
-                      source: Text(" ${NumberFormat.compactCurrency(
-                        decimalDigits: 2,
+                    strings.member,
+                    style: FluentTheme
+                        .of(context)
+                        .typography
+                        .display,
+                  ),
+                  infoBadge: InfoBadge(
+                    source: Obx(() {
+                      return Text(" ${NumberFormat.compactCurrency(
+                        decimalDigits: 0,
                         symbol:
-                            '', // if you want to add currency symbol then pass that in this else leave it empty.
-                      ).format(members)}"),
-                    ), body: logic.pages[logic.selectedidex.value]),
-                PaneItemSeparator(color: Colors.transparent),
-                PaneItem(
-                    selectedTileColor: ButtonState.all(colors.primary_color),
-                    icon: Image.asset(
-                      assets.shop,
-                      color: colors.primarywhite_color,
-                      height: 20,
-                    ),
-                    title: Text(
-                      strings.shop,
-                      style: FluentTheme.of(context).typography.display,
-                    ),
-                    infoBadge: InfoBadge(
-                      source: Text(" ${NumberFormat.compactCurrency(
-                        decimalDigits: 2,
-                        symbol:
-                            '', // if you want to add currency symbol then pass that in this else leave it empty.
-                      ).format(shops)}"),
-                    ), body: logic.pages[logic.selectedidex.value]),
-                PaneItemSeparator(color: Colors.transparent),
-                PaneItem(
+                        '', // if you want to add currency symbol then pass that in this else leave it empty.
+                      ).format(
+                          logicMember.logicAllMembers.allMembers.value.data ==
+                              null
+                              ? 0
+                              : logicMember.logicAllMembers.allMembers!.value
+                              .data!
+                              .length)}");
+                    }),
+                  ),
+                  body: logic.pages[logic.selectedidex.value]),
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItem(
                   selectedTileColor: ButtonState.all(colors.primary_color),
                   icon: Image.asset(
-                    assets.fee,
+                    assets.shop,
                     color: colors.primarywhite_color,
                     height: 20,
                   ),
                   title: Text(
-                    strings.fee,
-                    style: FluentTheme.of(context).typography.display,
-                  ), body: logic.pages[logic.selectedidex.value],
-                ),
-                PaneItemSeparator(color: Colors.transparent),
-                PaneItem(
-                  selectedTileColor: ButtonState.all(colors.primary_color),
-                  icon: Image.asset(
-                    assets.task_force,
-                    color: colors.primarywhite_color,
-                    height: 20,
+                    strings.shop,
+                    style: FluentTheme
+                        .of(context)
+                        .typography
+                        .display,
                   ),
-                  title: Text(
-                    strings.tax_force,
-                    style: FluentTheme.of(context).typography.display,
-                  ), body: logic.pages[logic.selectedidex.value],
-                ),
-                PaneItemSeparator(color: Colors.transparent),
-                PaneItem(
-                  selectedTileColor: ButtonState.all(colors.primary_color),
-                  icon: Image.asset(
-                    assets.admin,
-                    color: colors.primarywhite_color,
-                    height: 20,
+                  infoBadge: InfoBadge(
+                    source: Text(" ${NumberFormat.compactCurrency(
+                      decimalDigits: 2,
+                      symbol:
+                      '', // if you want to add currency symbol then pass that in this else leave it empty.
+                    ).format(shops)}"),
                   ),
-                  title: Text(
-                    strings.admin,
-                    style: FluentTheme.of(context).typography.display,
-                  ), body: logic.pages[logic.selectedidex.value],
+                  body: logic.pages[logic.selectedidex.value]),
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItem(
+                selectedTileColor: ButtonState.all(colors.primary_color),
+                icon: Image.asset(
+                  assets.fee,
+                  color: colors.primarywhite_color,
+                  height: 20,
                 ),
-                PaneItemSeparator(color: Colors.transparent),
-              ],
-            ),
-          );
+                title: Text(
+                  strings.fee,
+                  style: FluentTheme
+                      .of(context)
+                      .typography
+                      .display,
+                ), body: logic.pages[logic.selectedidex.value],
+              ),
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItem(
+                selectedTileColor: ButtonState.all(colors.primary_color),
+                icon: Image.asset(
+                  assets.task_force,
+                  color: colors.primarywhite_color,
+                  height: 20,
+                ),
+                title: Text(
+                  strings.tax_force,
+                  style: FluentTheme
+                      .of(context)
+                      .typography
+                      .display,
+                ), body: logic.pages[logic.selectedidex.value],
+              ),
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItem(
+                selectedTileColor: ButtonState.all(colors.primary_color),
+                icon: Image.asset(
+                  assets.admin,
+                  color: colors.primarywhite_color,
+                  height: 20,
+                ),
+                title: Text(
+                  strings.admin,
+                  style: FluentTheme
+                      .of(context)
+                      .typography
+                      .display,
+                ), body: logic.pages[logic.selectedidex.value],
+              ),
+              PaneItemSeparator(color: Colors.transparent),
+              PaneItemAction(
+                icon: Icon(
+                  FluentIcons.power_button, color: Colors.white, size: 20,),
+                title: Text(
+                  " LogOut",
+                  style: FluentTheme
+                      .of(context)
+                      .typography
+                      .display,
+                ),
+                onTap: () {
+                  logicLogin.showLogOutDialog(context);
+                },)
+            ],
+          ),
+        );
       }),
     );
   }

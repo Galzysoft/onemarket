@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' as mate;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:one_market/model/all_members.dart';
+import 'package:one_market/pages/members/all_members/logic.dart';
 import 'package:one_market/pages/members/all_members/view.dart';
 import 'package:one_market/pages/members/create_member/view.dart';
 import 'package:one_market/widgets/app_skelekton/view.dart';
@@ -21,7 +23,9 @@ class MembersPage extends StatefulWidget {
 }
 
 class _MembersPageState extends mate.State<MembersPage> {
+
   var logic = Get.put(MembersLogic());
+
   final state = Get
       .find<MembersLogic>()
       .state;
@@ -33,7 +37,9 @@ class _MembersPageState extends mate.State<MembersPage> {
   Widget build(BuildContext context) {
     return Obx(() {
       return AppSkeleton(selectedidex: logic.selectedidex.value,
-        onChanged: (value ) {logic.selectedidex.value=value;  },
+        onChanged: (value) {
+          logic.selectedidex.value = value;
+        },
         pages: pages,
         tabsBarItems: [
           PaneItemSeparator(color: Colors.transparent),
@@ -69,11 +75,16 @@ class _MembersPageState extends mate.State<MembersPage> {
               ),
               infoBadge: InfoBadge(
                 color: Colors.green.withOpacity(0.6),
-                source: Text(" ${NumberFormat.compactCurrency(
-                  decimalDigits: 2,
-                  symbol:
-                  '', // if you want to add currency symbol then pass that in this else leave it empty.
-                ).format(2000588)}"),
+                source: Obx(() {
+                  return Text(" ${NumberFormat.compactCurrency(
+                    decimalDigits: 0,
+                    symbol:
+                    '', // if you want to add currency symbol then pass that in this else leave it empty.
+                  ).format(logic.logicAllMembers.allMembers.value.data == null
+                      ? 0
+                      : logic.logicAllMembers.allMembers!.value.data!
+                      .length)}");
+                }),
               ), body: pages[1]),
           PaneItemSeparator(color: Colors.transparent),
         ],

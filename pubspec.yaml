@@ -36,6 +36,7 @@ dependencies:
   get: ^4.6.5
 #  for acrylic effect
   flutter_acrylic: ^1.0.0+2
+  retry: ^3.1.0
   syncfusion_flutter_datagrid: ^20.4.38
   shared_preferences: ^2.0.11
   flutter_animate: ^0.3.0+1
@@ -45,6 +46,7 @@ dependencies:
   dropdown_button2:
   shimmer: ^2.0.0
   google_fonts:
+  syncfusion_flutter_datagrid_export: ^20.4.42-beta
   intl:
   group_button:
 

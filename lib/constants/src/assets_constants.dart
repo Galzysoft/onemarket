@@ -1,6 +1,7 @@
 class assets{
 
   static const String home = 'assets/icons/Home (1).png';
+  static const String referesh = 'assets/icons/icons8-refresh-64.png';
   static const String member = 'assets/icons/Member (1).png';
   static const String shop = 'assets/icons/icons8-shop-96.png';
   static const String print = 'assets/icons/icons8-print-96.png';

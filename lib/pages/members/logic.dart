@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:one_market/model/user.dart';
+import 'package:one_market/pages/members/all_members/logic.dart';
 import 'package:one_market/pages/members/view.dart';
 import 'package:one_market/utils/app_state.dart';
 import'package:http/http.dart' as http;
@@ -21,22 +22,22 @@ class MembersLogic extends AppState {
   }
   final MembersState state = MembersState();
   var selectedidex = 0.obs;  final Rx<File?> image = (null as File?).obs;
-
+  var logicAllMembers = Get.put(All_membersLogic());
   TextEditingController firstname= new TextEditingController();
   TextEditingController middlename= new TextEditingController();
   TextEditingController lastname= new TextEditingController();
   TextEditingController phonenumber= new TextEditingController();
   TextEditingController email= new TextEditingController();
   TextEditingController username= new TextEditingController();
-  var nationality= (null as String).obs;
+  var nationality= "".obs;
 
   TextEditingController maritalstatus= new TextEditingController();
   TextEditingController dateofbirth= new TextEditingController();
   TextEditingController password= new TextEditingController();
   TextEditingController confirmpassword= new TextEditingController();
-var sex="".obs;
-var maritalStatus="".obs;
-  var selectedDate2="".obs;
+dynamic sex="".obs;
+dynamic maritalStatus="".obs;
+  dynamic selectedDate2="".obs;
 var selectedDate=(DateTime.now()).obs;
 
 
@@ -52,6 +53,9 @@ var selectedDate=(DateTime.now()).obs;
     else if (phonenumber.text.isEmpty) {
       ErrorHandlers(context,isError: true, message: "Phone number field is empty");
     }
+    else if (int.parse(phonenumber.text)<AppConfig.phoneDigit||int.parse(phonenumber.text)>AppConfig.phoneDigit) {
+      ErrorHandlers(context,isError: true, message: "invalid Phone number");
+    }
     else if (email.text.isEmpty) {
       ErrorHandlers(context,isError: true, message: "Email address field  is empty");
     }
@@ -61,15 +65,15 @@ var selectedDate=(DateTime.now()).obs;
     else if (username.text.isEmpty) {
       ErrorHandlers(context,isError: true, message: "Username field is empty");
     }
-    else if (nationality.isEmpty) {
+    else if (nationality.value.isEmpty) {
       ErrorHandlers(context,isError: true, message: "Nationality field is empty");
     }
-    else if (sex.isEmpty) {
-      ErrorHandlers(context,isError: true, message: "Gender field is empty");
+    else if (sex.value.isEmpty) {
+      ErrorHandlers(context,isError: true,message: "Gender field is empty");
     }
-    else if (maritalStatus.isEmpty) {
-      ErrorHandlers(context,isError: true, message: "Marital status field is empty");
-    }   else if (selectedDate.value.toString().isEmpty||selectedDate.value==null) {
+    else if (maritalStatus.value.isEmpty) {
+      ErrorHandlers(context,isError: true,ismessage: true, message: "Marital status field is empty");
+    }   else if (selectedDate2.value.toString().isEmpty||selectedDate2.value==null) {
       ErrorHandlers(context,isError: true, message: "Selected Date field is empty");
     }
     else if (password.text.isEmpty) {
@@ -153,8 +157,8 @@ var selectedDate=(DateTime.now()).obs;
       'POST',
       Uri.parse(Routes.membersURL),
     );
-    print('Headers.HeaderWithToken ${Headers.HeaderWithToken}');
-    request.headers.addAll(Headers.HeaderWithToken);
+    print('Headers.HeaderWithToken ${Headers.headerWithToken}');
+    request.headers.addAll(Headers.headerWithToken);
 
 // Add the form data and image to the request
     request.fields.addAll(formData);
@@ -169,6 +173,7 @@ var selectedDate=(DateTime.now()).obs;
     if (response.statusCode==200) {
       // The request was successful
       print('sucesss  ${response.body}');
+
       ErrorHandlers(
         context,
           isError: false,
@@ -177,7 +182,9 @@ var selectedDate=(DateTime.now()).obs;
           );
 
       clearFields();
+
       setToLoaded();
+      logicAllMembers.getallMembers();
       // Get.toNamed(RoutesPage.emailVerificationPage);
     } else {
       print('sucesss is error  ${response}');
@@ -219,8 +226,8 @@ var selectedDate=(DateTime.now()).obs;
       'POST',
       Uri.parse(Routes.membersURL),
     );
-    print('Headers.HeaderWithToken ${Headers.HeaderWithToken}');
-    request.headers.addAll(Headers.HeaderWithToken);
+    print('Headers.HeaderWithToken ${Headers.headerWithToken}');
+    request.headers.addAll(Headers.headerWithToken);
 // Add the form data and image to the request
     request.fields.addAll(formData);
 
@@ -234,6 +241,7 @@ var selectedDate=(DateTime.now()).obs;
     if (response.statusCode==200) {
       // The request was successful
       print('sucesss  ${response.body}');
+      clearFields();
       ErrorHandlers(
         context,
           isError: false,
@@ -241,6 +249,7 @@ var selectedDate=(DateTime.now()).obs;
           );
 
       setToLoaded();
+      logicAllMembers.getallMembers();
       // Get.toNamed(RoutesPage.emailVerificationPage);
     } else {
       print('error statusCode ${response.statusCode}');
@@ -257,14 +266,17 @@ void clearFields(){
    firstname.text="";
  username.text="";
  email.text="";
+ middlename.text="";
  phonenumber.text="";
  password.text="";
   nationality.value="";
-  sex.value="";
+  sex.value=null;
 lastname.text="";
+image.value=null;
 
-maritalStatus.value="";
- selectedDate.value.toString();
+maritalStatus.value=null;
+selectedDate2.value="";
+  // selectedDate = DateTime.may;
 confirmpassword.text="";
 }
   Future pickImage() async {

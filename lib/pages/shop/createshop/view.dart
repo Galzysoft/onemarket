@@ -67,7 +67,7 @@ class CreateShopPage extends StatelessWidget {
                                     selectMemberDialog(
                                       context,
                                     ).then((value) =>
-                                    logic.member.value = value!.name);
+                                    logic.member.value =  value!.firstname!+" "+ value!.middlename!+ value!.lastname!);
                                   },
                                   member: logic.member.value,
                                   labelText: 'Choose Owner (Optional)',
@@ -130,7 +130,7 @@ class CreateShopPage extends StatelessWidget {
                                                 selectMemberDialog(
                                                   context,
                                                 ).then((value) => logic
-                                                    .guarantor.value = value!.name);
+                                                    .guarantor.value = value!.firstname!+" "+ value!.middlename!+ value!.lastname!);
                                               },
                                               member: logic.guarantor.value,
                                               labelText: 'Choose Guarantor ',

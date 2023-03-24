@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as mate;
 import 'package:one_market/constants/constants_and_imports.dart';
 import 'package:get/get.dart';
+import 'package:one_market/pages/login/logic.dart';
 import 'package:one_market/widgets/tool_bar/view.dart';
 import 'package:one_market/widgets/tool_bar/widget/toolBarItem.dart';
 
@@ -10,7 +11,7 @@ class UsersHeaderPage extends StatelessWidget {
   final logic = Get.put(UsersHeaderLogic());
   final state = Get.find<UsersHeaderLogic>().state;
   final bool? backbutton;
-
+  final logicuser = Get.put(LoginLogic());
   final Widget? centerWidget;
   String? title;
   final List<CommandBarItem>? toolBarItems;
@@ -83,12 +84,12 @@ class UsersHeaderPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text("mr sam ijoku",
+                                  Text(logicuser.userModel.value.data!.user!.username.toString(),
                                       overflow: TextOverflow.ellipsis,
                                       style: FluentTheme.of(context)
                                           .typography
                                           .title),
-                                  Text("admin",
+                                  Text(logicuser.userModel.value.data!.user!.adminType!.toString(),
                                       overflow: TextOverflow.ellipsis,
                                       style: FluentTheme.of(context)
                                           .typography
@@ -98,10 +99,14 @@ class UsersHeaderPage extends StatelessWidget {
                             ),
                             Padding(
                                 padding: EdgeInsets.only(left: 8.0),
-                                child: CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                    assets.user,
-                                  ),
+                                child: Container(width: 50,height: 50,
+                                    decoration: BoxDecoration(shape: BoxShape.circle,),
+                                  child:ClipRRect(borderRadius: BorderRadius.circular(20000),
+                                    child: FadeInImage(fit: BoxFit.fill,placeholder:  AssetImage(
+                                      assets.user,
+                                    ),image: NetworkImage(Routes.storageProfileUrl+logicuser.userModel.value.data!.user!.avatar!.toString(),),),
+                                  )
+
                                 )),
                           ],
                         ),

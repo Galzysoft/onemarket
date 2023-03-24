@@ -5,12 +5,14 @@ import 'package:flutter/material.dart' as mate;
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ms_material_color/ms_material_color.dart';
+import 'package:one_market/pages/dashboard/view.dart';
 
 import 'package:one_market/pages/login/view.dart';
 import 'package:one_market/constants/constants_and_imports.dart';
 import 'package:one_market/pages/members/logic.dart';
 import 'package:one_market/pages/navigation/view.dart';
 
+import 'pages/login/logic.dart';
 import 'pages/members/all_members/logic.dart';
 
 void main() {
@@ -18,8 +20,8 @@ void main() {
 
   doWhenWindowReady(() {
     final win = appWindow;
-    win.minSize = Size(810, 545);
-    win.size = Size(955, 545);
+    win.minSize = Size(1010, 645);
+    win.size = Size(1010, 645);
     win.alignment = Alignment.center;
     win.title = strings.app_title;
     win.show();
@@ -27,7 +29,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final logic = Get.put(All_membersLogic());
+
 
   MyApp({Key? key}) : super(key: key);
 
@@ -42,14 +44,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: MsMaterialColor(0xff35385D),
       ),
       home: FluentApp(
-        initialRoute: PageRoutes.login,
+
+        initialRoute: PageRoutes.chooseScreen,
         onGenerateRoute: (settings) {
           switch (settings.name) {
+            case "/chooseScreen":
+              return FluentPageRoute(
+                builder: (context) => MyHomePage(title:""),
+              );
             case "/login":
               return FluentPageRoute(
                 builder: (context) => LoginPage(),
               );
-            case "/navigation":
+              case "/navigation":
               return FluentPageRoute(
                 builder: (context) => NavigationPage(),
               );
@@ -93,7 +100,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 12,
                   color: Colors.white,
                   fontWeight: FontWeight.normal,
-                ),
+                ),bodyStrong: GoogleFonts.rubik(
+              fontSize: 17,
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+            ),
                 subtitle: GoogleFonts.rubik(
                   fontSize: 10,
                   color: Colors.black,
@@ -138,7 +149,7 @@ class MyApp extends StatelessWidget {
           //
         ),
         themeMode: ThemeMode.light,
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
       ),
     );
   }
@@ -147,14 +158,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -163,21 +166,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+
+  final logic = Get.put(LoginLogic());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
   }
-
   @override
   Widget build(BuildContext context) {
-    return LoginPage();
+    return mate.Scaffold(
+      body: FutureBuilder(future: logic.chooseScreen(),
+        builder: (context,snapshot) {
+          if (snapshot.hasData == true) {
+            if (snapshot.data == true) {
+              return NavigationPage();
+            } else {
+              return LoginPage();
+            }
+          }
+          else   if (snapshot.data == null)  {
+            return LoginPage();
+
+          }
+
+         else {
+          return    mate.Scaffold(
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        mate.CircularProgressIndicator(),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
+          }
+      ),
+    );
   }
 }

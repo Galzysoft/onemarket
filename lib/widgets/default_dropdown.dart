@@ -20,11 +20,7 @@ class _DropDownButtonState extends State<DropDownButton> {
               size: 46,
               color: Colors.red,
             ),
-            customItemsHeights: [
-              ...List<double>.filled(MenuItems.firstItems.length, 48),
-              8,
-              ...List<double>.filled(MenuItems.secondItems.length, 48),
-            ],
+
             items: [
               ...MenuItems.firstItems.map(
                     (item) =>
@@ -44,17 +40,11 @@ class _DropDownButtonState extends State<DropDownButton> {
             ],
             onChanged: (value) {
               MenuItems.onChanged(context, value as MenuItem);
-            },
-            itemHeight: 48,
-            itemPadding: const EdgeInsets.only(left: 16, right: 16),
-            dropdownWidth: 160,
-            dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.redAccent,
-            ),
-            dropdownElevation: 8,
-            offset: const Offset(0, 8),
+            },buttonStyleData: ButtonStyleData(height: 48,padding:  EdgeInsets.only(left: 16, right: 16),decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.redAccent,
+          ),elevation: 8,width: 160, ),
+
           ),
         ),
       ),

@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
+// import 'package:one_market/constants/constants_and_imports.dart';
 import 'package:one_market/constants/src/api_constants.dart';
 import 'package:one_market/model/user.dart';
+import 'package:one_market/pages/login/view.dart';
+import 'package:one_market/pages/members/all_members/logic.dart';
 import 'package:one_market/pages/navigation/view.dart';
 import 'package:one_market/utils/app_state.dart';
 import 'package:http/http.dart' as http;
@@ -14,8 +17,15 @@ import 'state.dart';
 class LoginLogic extends AppState {
   final LoginState state = LoginState();
   var index = 0.obs;
+  final isHasUser=false.obs;
+  var isRememberMe=false.obs;
   late SharedPreferences sharedPreferences;
-  UserModel userModel =UserModel();
+   setRememberMe(bool isremem)async{
+
+    sharedPreferences
+        .setBool(SharedPrefKeys.rememberMe, isremem).then((value) => isRememberMe.value=isremem);
+  }
+  var userModel =UserModel().obs;
   List<Widget> pages = [
     ScaffoldPage(
         header: PageHeader(
@@ -59,36 +69,6 @@ class LoginLogic extends AppState {
         content: Center(child: const Text('Inputs'))),
   ];
 
-  static showMessage(
-      {required String message,
-      required String messageServer,
-      required bool isError}) {
-    return showSnackbar(
-      Get.context!,
-      ScaffoldPage(
-        content: SnackbarTheme(
-          data: SnackbarThemeData(
-              decoration: BoxDecoration(
-            color: isError == true ? Colors.red : Colors.green,
-          )),
-          child: Snackbar(
-            extended: true,
-            action: Button(
-              child: Text("Okay"),
-              onPressed: () {
-                Navigator.pop(Get.context!);
-              },
-            ),
-            content: Text(messageServer == "null" || messageServer.isEmpty
-                ? message
-                : messageServer),
-          ),
-        ),
-      ),
-    );
-    // showCustomSnackBar(messageServer=="null"||message.isEmpty?message:messageServer, bannerColor: isError?Colors.red:Colors.green);
-  }
-
   void changeIndex(int newIndex) {}
   static Uri uri = Uri.parse(Routes.loginURL);
 
@@ -127,34 +107,32 @@ class LoginLogic extends AppState {
         setToLoaded();
         print("clicked me2 ${isloading}");
         if (response.statusCode == 200) {
-          Map bodyResponse = json.decode(response.body);
+
           ErrorHandlers(context,
               isError: false,
               message: "User LoggedIn successfully",
-              messageServer: jsonDecode(response.body)["message"]);
+              // messageServer: jsonDecode(response.body)["message"]
+
+          );
           saveUser(response.body);
           print("my is lgged in  body ${response.body}");
 
           setToLoaded();
+          Navigator.pushReplacementNamed(context, "/navigation");
 
-          Navigator.pushReplacement(
-              context,
-              FluentPageRoute(
-                builder: (context) => NavigationPage(),
-              ));
         } else {
           setToError();
           ErrorHandlers(context,
               isError: true,
-              message: "Email  or Password not correct",
-              messageServer: jsonDecode(response.body)["status"]);
-          Flyout(
-            content: (BuildContext context) {
-              return FlyoutContent(
-                  color: Colors.red, child: Text("Error logging in"));
-            },
-            child: Text(""),
-          );
+              message: "Email  or Password not correct",ismessage: true,
+              messageServer: jsonDecode(response.body)["message"]);
+          // Flyout(
+          //   content: (BuildContext context) {
+          //     return FlyoutContent(
+          //         color: Colors.red, child: Text("Error logging in"));
+          //   },
+          //   child: Text(""),
+          // );
           // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           //   content: Row(
           //     children: [
@@ -177,6 +155,8 @@ class LoginLogic extends AppState {
         }
       } else {
         setToError();
+        ErrorHandlers(context,isError: true, message: "No internet connection");
+
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         //   content: Row(
         //     children: [
@@ -237,17 +217,84 @@ class LoginLogic extends AppState {
     sharedPreferences
         .setString(SharedPrefKeys.user, json)
         .whenComplete(() {
-      userModel=UserModel.fromJson(jsonDecode(json)) ;
-
+      userModel.value=UserModel.fromJson(jsonDecode(json)) ;
+isHasUser.value=true;
       print('saved done ${jsonDecode(json)}');
       // isSelected = true;
     });
   }
+
+  Future<dynamic>chooseScreen()async{
+    print('ben');
+    setToLoading();
+    sharedPreferences= await SharedPreferences.getInstance();
+
+    // return false;
+    dynamic val=sharedPreferences.getBool(SharedPrefKeys.rememberMe);
+    if (val == true) {
+      setToLoaded();
+      return true;
+
+    }
+    else {
+      setToLoaded();
+      return false;
+
+    }
+
+
+
+
+
+
+  }
+
+
+  void showLogOutDialog(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: const Text('Log Out'),
+        content:  Text(
+            'Do you want to log out? ',style: FluentTheme.of(context).typography.title!.copyWith(color: FluentTheme.of(context).scaffoldBackgroundColor ),
+        ),
+        actions: [
+          Button(
+            child: const Text('Yes'),
+            onPressed: () {
+  Navigator.pop(context,true);
+
+              // Delete file here
+            },
+          ),
+          FilledButton(
+            child: const Text('No'),
+            onPressed: () => Navigator.pop(context,false),
+          ),
+        ],
+      ),
+    );
+    if(result==true){        setRememberMe(false);
+    Navigator.pushReplacementNamed(context, "/chooseScreen");}
+
+  }
   @override
   void onReady() async{
+    setToLoading();
     sharedPreferences =
     await SharedPreferences.getInstance() as SharedPreferences;
+    isRememberMe.value=sharedPreferences.getBool(SharedPrefKeys.rememberMe)==null?false:sharedPreferences.getBool(SharedPrefKeys.rememberMe)!;
     // TODO: implement onReady
+    userModel.value=UserModel.fromJson(jsonDecode(sharedPreferences.getString(SharedPrefKeys.user)!));
+    isHasUser.value=true;
+    setToLoading();
+    if (await ishasinternet) {
+
+      Get.put(All_membersLogic());
+    }
+    else{  ErrorHandlers(Get.context!,message:"No internet connection",isError: true );
+
+  setToLoading();  }
     super.onReady();
   }
 }

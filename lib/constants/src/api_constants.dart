@@ -5,7 +5,7 @@ import 'package:one_market/pages/login/logic.dart';
 
 class Headers {
   //Header Keys
-  static final String contentType = 'content-type';
+  static final String contentType = 'Content-Type';
   static final String accept = 'Accept';
   static final String authorization = 'Authorization';
   static final String id = 'id';
@@ -14,7 +14,7 @@ class Headers {
 
 //Header values
   static final String contentTypeValue = 'application/json';
-  static final  String tokenValue=logicuser.userModel.data!.token!;
+  static final  String tokenValue=logicuser.userModel.value.data!.token!;
 
   static final String acceptValue = 'application/json';
   // static final String authorizationValue = 'Bearer ${getToken()}';
@@ -24,7 +24,8 @@ class Headers {
     contentType: contentTypeValue,
     accept: acceptValue,
 
-  };  static Map<String, String> HeaderWithToken = {
+  };
+  static Map<String, String> headerWithToken = {
     contentType: contentTypeValue,
     accept: acceptValue,
     authorization:"Bearer "+tokenValue
@@ -167,10 +168,20 @@ class SharedPrefKeys {
 class Routes {
 
   static const String baseUrl = 'https://onemarket.xnodde.com/';
+  static const String storageProfileUrl = 'https://onemarket.xnodde.com/storage/profile_images/';
     //loginURL
   static const String loginURL = '${baseUrl}api/v1/login';
   //membersURL
   static const String membersURL = '${baseUrl}api/v1/register';
+  //all membersURL
+  static const String allMembersURL = '${baseUrl}api/v1/member';
+  static const String allOwnersURL = '${baseUrl}api/v1/owner';
+  static const String allAttachesURL = '${baseUrl}api/v1/attachee';
+  static const String allApprenticeURL = '${baseUrl}api/v1/apprentice';
+  static const String allWorkerURL = '${baseUrl}api/v1/worker';
+  static const String allTaskforceURL = '${baseUrl}api/v1/taskforce';
+
+
 
   // https://test.solemn.tech/totalfuel
   static const String graphstateurl = '${baseUrl}totalfuel';
